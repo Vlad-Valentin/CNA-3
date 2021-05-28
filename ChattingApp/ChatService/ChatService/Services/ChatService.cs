@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatService.Utility;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Core.Logging;
@@ -23,7 +24,16 @@ namespace ChatService.Services
         {
             Console.WriteLine("Got message from " + request.Message.User.Name);
 
+            ChatBase.WriteToList(request.Message);
+
             return Task.FromResult(m_empty);
+        }
+
+        public override Task<DisplayMessageResponse> DisplayMessage(Empty request, ServerCallContext context)
+        {
+            DisplayMessageResponse displayMessageResponse = new DisplayMessageResponse();
+            displayMessageResponse.ReturnedMessages.AddRange(ChatBase.ChatLog);
+            return Task.FromResult(displayMessageResponse);
         }
     }
 }

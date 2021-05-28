@@ -9,10 +9,15 @@ package chat;
 
 service MessengerService{
 	rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
+	rpc DisplayMessage(google.protobuf.Empty) returns (DisplayMessageResponse);
 }
 
 message SendRequest{
 	Message message=1;
+}
+
+message DisplayMessageResponse{
+	 repeated string returnedMessages=1;
 }
 
 
