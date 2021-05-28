@@ -1,0 +1,15 @@
+﻿<Window x:Class="ChatClient.Views.EntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClient.Views"
+        mc:Ignorable="d"
+        Title="EntryWindow" Height="120" Width="300">
+    <Canvas>
+        <TextBox x:Name="UsernameText"
+            Text="" TextWrapping="Wrap" Canvas.Left="39" Canvas.Top="38" Width="141"/>
+        <Button Content="Enter"
+            Click="Enter_Click" Canvas.Left="185" Canvas.Top="37"/>
+    </Canvas>
+</Window>

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "ChatService";
+
+import "google/protobuf/Empty.proto";
+
+package chat;
+
+
+service MessengerService{
+	rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
+	rpc DisplayMessage(google.protobuf.Empty) returns (DisplayMessageResponse);
+}
+
+message SendRequest{
+	Message message=1;
+}
+
+message DisplayMessageResponse{
+	 repeated string returnedMessages=1;
+}
+
+
+message User{
+	int32 id=1;
+	string name=2;
+}
+
+message Message{
+	string text=1;
+	User user=2;
+}
+

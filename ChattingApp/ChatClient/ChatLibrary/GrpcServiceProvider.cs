@@ -8,7 +8,7 @@ namespace ChatLibrary
     {
         private string Url { get; set; }
         private Lazy<GrpcChannel> RpcChannel { get; set; }
-        private Greeter.GreeterClient ChatClient { get; set; }
+        private ChatService.MessengerService.MessengerServiceClient ChatClient { get; set; }
 
         public GrpcServiceProvider()
         {
@@ -16,6 +16,7 @@ namespace ChatLibrary
             this.RpcChannel = new Lazy<GrpcChannel>(GrpcChannel.ForAddress(this.Url));
         }
 
-        public Greeter.GreeterClient GetGreeterClient() => this.ChatClient ??= new Greeter.GreeterClient(this.RpcChannel.Value);
+        public ChatService.MessengerService.MessengerServiceClient GetMessengerClient() => 
+            this.ChatClient ??= new ChatService.MessengerService.MessengerServiceClient(this.RpcChannel.Value);
     }
 }
