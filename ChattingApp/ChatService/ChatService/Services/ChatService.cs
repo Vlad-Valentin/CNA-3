@@ -31,20 +31,31 @@ namespace ChatService.Services
             return Task.FromResult(m_empty);
         }
 
+        public override Task<SendUserListResponse> SendUserList(Empty request, ServerCallContext context)
+        {
+            SendUserListResponse sendUserListResponse = new SendUserListResponse();
+            sendUserListResponse.Users.AddRange(ChatBase.UserList);
+
+            Console.WriteLine("Sent user list.");
+            return Task.FromResult(sendUserListResponse);
+        }
+
         public override Task<Empty> SendMessage(SendRequest request, ServerCallContext context)
         {
             Console.WriteLine("Got message from " + request.Message.User.Name);
 
-            ChatBase.WriteToList(request.Message);
+            ChatBase.WriteToMessageList(request.Message);
 
             return Task.FromResult(m_empty);
         }
 
-        public override Task<DisplayMessageResponse> DisplayMessage(Empty request, ServerCallContext context)
+        public override Task<SendMessageListResponse> SendMessageList(Empty request, ServerCallContext context)
         {
-            DisplayMessageResponse displayMessageResponse = new DisplayMessageResponse();
-            displayMessageResponse.ReturnedMessages.AddRange(ChatBase.ChatLog);
-            return Task.FromResult(displayMessageResponse);
+            SendMessageListResponse sendMessageListResponse = new SendMessageListResponse();
+            sendMessageListResponse.Messages.AddRange(ChatBase.ChatLog);
+
+            Console.WriteLine("Sent message list.");
+            return Task.FromResult(sendMessageListResponse);
         }
     }
 }

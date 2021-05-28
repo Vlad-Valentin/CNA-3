@@ -5,20 +5,18 @@ namespace ChatService.Utility
 {
     public static class ChatBase
     {
-        public static List<string> ChatLog { get; set; }
+        public static List<Message> ChatLog { get; set; }
         public static List<User> UserList { get; set; }
 
         static ChatBase()
         {
-            ChatLog = new List<string>();
+            ChatLog = new List<Message>();
             UserList = new List<User>();
         }
 
-        public static void WriteToList(Message message)
+        public static void WriteToMessageList(Message message)
         {
-            StringBuilder stringBuilder = new();
-            stringBuilder.Append(message.User.Name).Append(": ").Append(message.Text);
-            ChatLog.Add(stringBuilder.ToString());
+            ChatLog.Add(message);
         }
 
         public static void WriteToUserList(User user)

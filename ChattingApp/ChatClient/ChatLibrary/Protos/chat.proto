@@ -8,8 +8,10 @@ package chat;
 
 service MessengerService{
 	rpc GetUser(GetUserRequest) returns (google.protobuf.Empty);
+	rpc SendUserList(google.protobuf.Empty) returns (SendUserListResponse);
+	
 	rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
-	rpc DisplayMessage(google.protobuf.Empty) returns (DisplayMessageResponse);
+	rpc SendMessageList(google.protobuf.Empty) returns (SendMessageListResponse);
 }
 
 message GetUserRequest{
@@ -17,19 +19,23 @@ message GetUserRequest{
 }
 
 message SendRequest{
-	Message message=1;
+	Message message = 1;
 }
 
-message DisplayMessageResponse{
-	 repeated string returnedMessages=1;
+message SendUserListResponse{
+	 repeated User users = 1;
+}
+
+message SendMessageListResponse{
+	repeated Message messages = 1;
 }
 
 message User{
-	int32 id=1;
-	string name=2;
+	int32 id = 1;
+	string name = 2;
 }
 
 message Message{
-	string text=1;
-	User user=2;
+	string text = 1;
+	User user = 2;
 }

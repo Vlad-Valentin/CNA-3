@@ -1,5 +1,8 @@
-﻿using ChatLibrary;
+﻿using ChatClient.Utility;
+using ChatLibrary;
+using Google.Protobuf.WellKnownTypes;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,32 +13,80 @@ namespace ChatClient.Views
     /// </summary>
     public partial class EntryWindow : Window
     {
+        private UserDetails userDetails;
+
+        private readonly Empty empty = new();
         public EntryWindow()
         {
             InitializeComponent();
+            userDetails = new UserDetails();
         }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            _ = CallGrpcService();
+            _ = SendUserRequest();
+            _ = SendMessageRequest();
 
-            MainWindow mainWindow = new(UsernameText.Text);
+            var users = GetUserListRequest();
+            List<string> userList = new();
+            foreach (User user in users.Users)
+            {
+                userList.Add(user.Name);
+            }
+
+            var messages = GetMessageListRequest();
+            List<string> messageList = new();
+            foreach (Message message in messages.Messages)
+            {
+                messageList.Add(message.Text);
+            }
+
+            var rand = new Random();
+            userDetails.Id = rand.Next(0, 10);
+            userDetails.Name = UsernameText.Text;
+
+            MainWindow mainWindow = new(UsernameText.Text, userList, messageList, userDetails);
             mainWindow.Show();
 
             Close();
         }
 
-        private async Task CallGrpcService()
+        private async Task SendUserRequest()
         {
-            var rand = new Random();
+            var rand = new System.Random();
             var client = new GrpcServiceProvider().GetMessengerClient();
-            User usersv = new User()
+            User usersv = new()
             {
                 Name = UsernameText.Text,
                 Id = rand.Next(0, 10)
-
             };
-            var reply = await client.GetUserAsync(request: new GetUserRequest { User = usersv });
+
+            await client.GetUserAsync(request: new GetUserRequest { User = usersv });
+        }
+
+        private async Task SendMessageRequest()
+        {
+            var rand = new System.Random();
+            var client = new GrpcServiceProvider().GetMessengerClient();
+            Message messagesv = new()
+            {
+                Text = UsernameText.Text,
+                User = new User() { Id = userDetails.Id, Name = userDetails.Name }
+            };
+
+            await client.SendMessageAsync(request: new SendRequest { Message = messagesv });
+        }
+
+        private SendUserListResponse GetUserListRequest()
+        {
+            var client = new GrpcServiceProvider().GetMessengerClient();
+            return client.SendUserList(request: empty);
+        }
+
+        private SendMessageListResponse GetMessageListRequest()
+        {
+            var client = new GrpcServiceProvider().GetMessengerClient();
+            return client.SendMessageList(request: empty);
         }
     }
 }

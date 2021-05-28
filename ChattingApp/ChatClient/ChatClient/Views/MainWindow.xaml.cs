@@ -1,20 +1,24 @@
-﻿using ChatLibrary;
+﻿using ChatClient.Utility;
+using ChatLibrary;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace ChatClient.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(string username)
+        public MainWindow(string username,
+            List<string> users,
+            List<string> messages,
+            UserDetails userDetails)
         {
             InitializeComponent();
 
             UsernameBlock.Text = username;
+            UserList.ItemsSource = users;
+            MessageList.ItemsSource = messages;
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)
