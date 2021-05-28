@@ -1,5 +1,5 @@
 ﻿using Grpc.Net.Client;
-using ChatProtos;
+using ChatClient;
 using System;
 
 namespace ChatLibrary
@@ -8,7 +8,7 @@ namespace ChatLibrary
     {
         private string Url { get; set; }
         private Lazy<GrpcChannel> RpcChannel { get; set; }
-        private ChatService.MessengerService.MessengerServiceClient ChatClient { get; set; }
+        private MessengerService.MessengerServiceClient ChatClient { get; set; }
 
         public GrpcServiceProvider()
         {
@@ -16,7 +16,7 @@ namespace ChatLibrary
             this.RpcChannel = new Lazy<GrpcChannel>(GrpcChannel.ForAddress(this.Url));
         }
 
-        public ChatService.MessengerService.MessengerServiceClient GetMessengerClient() => 
-            this.ChatClient ??= new ChatService.MessengerService.MessengerServiceClient(this.RpcChannel.Value);
+        public MessengerService.MessengerServiceClient GetMessengerClient() => 
+            this.ChatClient ??= new MessengerService.MessengerServiceClient(this.RpcChannel.Value);
     }
 }

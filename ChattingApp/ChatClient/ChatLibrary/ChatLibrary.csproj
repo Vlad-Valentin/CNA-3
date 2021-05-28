@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" Services="Client"/>
-    <Protobuf Include="Protos\chat.proto" Services="Client"/>
+    <Protobuf Include="Protos\chat.proto" Services="Client" />
   </ItemGroup>
 
 </Project>

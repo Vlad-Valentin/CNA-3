@@ -31,16 +31,16 @@ namespace ChatClient.Views
              this.UserText.Text = reply.Message;*/
             var rand = new Random();
             var client = new GrpcServiceProvider().GetMessengerClient();
-            ChatService.Message chatsv = new ChatService.Message()
+            Message chatsv = new Message()
             {
                 Text = UserText.Text,
-                User = new ChatService.User()
+                User = new User()
                 {
                     Id = rand.Next(0, 10),
                     Name = UsernameBlock.Text
                 },
             };
-            var reply = await client.SendMessageAsync(request: new ChatService.SendRequest { Message = chatsv });
+            var reply = await client.SendMessageAsync(request: new SendRequest { Message = chatsv });
         }
     }
 }

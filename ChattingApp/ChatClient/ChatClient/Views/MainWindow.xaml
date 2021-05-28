@@ -7,10 +7,15 @@
         Title="MainWindow" Height="450" Width="800">
     <Canvas>
 
-        <TextBox x:Name="UserText"
-            HorizontalAlignment="Left" Margin="39,38,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="100"/>
-        <Button Content="Send" Margin="164,38,584,374"
-                Click="Send_Click"/>
-        <TextBlock x:Name="UsernameBlock" Text="" Width="120" Canvas.Left="39" Canvas.Top="143"></TextBlock> 
+        <TextBox x:Name="UserText" Margin="39,38,0,0" Text="" TextWrapping="Wrap" Width="240" Height="43" Canvas.Left="417" Canvas.Top="325"/>
+        <Button Content="Send"
+                Click="Send_Click" Canvas.Left="701" Canvas.Top="363" Height="43" Width="56"/>
+        <TextBlock x:Name="UsernameBlock" Text="" Width="120" Canvas.Left="516" Canvas.Top="20"></TextBlock>
+        
+        <ListBox x:Name ="UserList"
+                 Height="375" Width="120" Canvas.Left="23" Canvas.Top="28"/>
+        <ListBox x:Name="ChatText" 
+            Canvas.Left="456" Canvas.Top="28" Width="240" Height="313"/>
+        
     </Canvas>
 </Window>

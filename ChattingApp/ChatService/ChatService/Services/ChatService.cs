@@ -20,6 +20,17 @@ namespace ChatService.Services
             _logger = logger;
         }
 
+        public override Task<Empty> GetUser(GetUserRequest request, ServerCallContext context)
+        {
+            User user = new() { Name = request.User.Name, Id = 0 };
+
+            Console.WriteLine($"{user.Name} Logged In");
+
+            ChatBase.WriteToUserList(user);
+
+            return Task.FromResult(m_empty);
+        }
+
         public override Task<Empty> SendMessage(SendRequest request, ServerCallContext context)
         {
             Console.WriteLine("Got message from " + request.Message.User.Name);

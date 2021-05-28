@@ -6,10 +6,14 @@ import "google/protobuf/Empty.proto";
 
 package chat;
 
-
 service MessengerService{
+	rpc GetUser(GetUserRequest) returns (google.protobuf.Empty);
 	rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
 	rpc DisplayMessage(google.protobuf.Empty) returns (DisplayMessageResponse);
+}
+
+message GetUserRequest{
+	User user = 1;
 }
 
 message SendRequest{
@@ -20,7 +24,6 @@ message DisplayMessageResponse{
 	 repeated string returnedMessages=1;
 }
 
-
 message User{
 	int32 id=1;
 	string name=2;
@@ -30,4 +33,3 @@ message Message{
 	string text=1;
 	User user=2;
 }
-
