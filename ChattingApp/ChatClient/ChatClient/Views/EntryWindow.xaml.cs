@@ -1,8 +1,10 @@
 ﻿using ChatClient.Utility;
+using ChatClient.ViewModels;
 using ChatLibrary;
 using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,10 +16,11 @@ namespace ChatClient.Views
     public partial class EntryWindow : Window
     {
         private UserDetails userDetails;
+        MainWindowVM main = new();
 
         private readonly Empty empty = new();
         public EntryWindow()
-        {
+        {      
             InitializeComponent();
             userDetails = new UserDetails();
         }
@@ -28,18 +31,20 @@ namespace ChatClient.Views
             _ = SendMessageRequest();
 
             var users = GetUserListRequest();
-            List<string> userList = new();
+            ObservableCollection<string> userList = new();
             foreach (User user in users.Users)
             {
                 userList.Add(user.Name);
             }
+            main.UserList = userList;
 
             var messages = GetMessageListRequest();
-            List<string> messageList = new();
+            ObservableCollection<string> messageList = new();
             foreach (Message message in messages.Messages)
             {
                 messageList.Add(message.Text);
             }
+            main.MessageList = messageList;
 
             var rand = new Random();
             userDetails.Id = rand.Next(0, 10);

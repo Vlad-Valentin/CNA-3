@@ -1,7 +1,9 @@
 ﻿using ChatClient.Utility;
+using ChatClient.ViewModels;
 using ChatLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,15 +12,17 @@ namespace ChatClient.Views
     public partial class MainWindow : Window
     {
         public MainWindow(string username,
-            List<string> users,
-            List<string> messages,
+            ObservableCollection<string> users,
+            ObservableCollection<string> messages,
             UserDetails userDetails)
         {
+           DataContext = new MainWindowVM();
+
             InitializeComponent();
 
             UsernameBlock.Text = username;
-            UserList.ItemsSource = users;
-            MessageList.ItemsSource = messages;
+            UserBox.ItemsSource = users;
+            MessageBox.ItemsSource = messages;
         }
 
         private void Send_Click(object sender, RoutedEventArgs e)

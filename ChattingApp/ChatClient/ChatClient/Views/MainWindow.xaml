@@ -3,8 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ChatClient.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
     <Canvas>
 
         <TextBox x:Name="UserText" Margin="39,38,0,0" Text="" TextWrapping="Wrap" Width="240" Height="43" Canvas.Left="417" Canvas.Top="325"/>
@@ -12,9 +16,9 @@
                 Click="Send_Click" Canvas.Left="701" Canvas.Top="363" Height="43" Width="56"/>
         <TextBlock x:Name="UsernameBlock" Text="" Width="120" Canvas.Left="516" Canvas.Top="20"></TextBlock>
 
-        <ListBox x:Name ="UserList"
+        <ListBox x:Name ="UserBox" ItemsSource="{Binding UserList}"
                  Height="375" Width="120" Canvas.Left="23" Canvas.Top="28"/>
-        <ListBox x:Name="MessageList" 
+        <ListBox x:Name="MessageBox" ItemsSource="{Binding MessageList}"
             Canvas.Left="456" Canvas.Top="72" Width="240" Height="269"/>
 
     </Canvas>
