@@ -11,9 +11,91 @@
     </Window.DataContext>
     <Canvas>
 
-        <TextBox x:Name="UserText" Margin="39,38,0,0" Text="" TextWrapping="Wrap" Width="240" Height="43" Canvas.Left="417" Canvas.Top="325"/>
-        <Button Content="Send"
-                Click="Send_Click" Canvas.Left="701" Canvas.Top="363" Height="43" Width="56"/>
+        <TextBox x:Name="UserText"
+                 Text=""
+                 TextWrapping="Wrap"
+                 Width="450"
+                 Height="50"
+                 Canvas.Left="256"
+                 Canvas.Top="360"
+                 
+                 FontWeight="Bold"
+                 Foreground="Black">
+
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+
+                            </Style.Triggers>
+
+
+                        </Style>
+                    </TextBox.Style>
+
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border CornerRadius="8"
+                            Width="450"
+                            Height="50"
+                            Background="{TemplateBinding Background}">
+
+                                <ContentPresenter
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Content="{TemplateBinding Text}">
+                                </ContentPresenter>
+
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+
+                </TextBox>
+
+                <!--Send Button-->
+                <Button Content="Send"
+                Click="Send_Click"
+                Canvas.Left="720"
+                Canvas.Top="365"
+                Height="40"
+                Width="50"
+                Foreground="White">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Violet"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Magenta"/>
+                                </Trigger>
+                            </Style.Triggers>
+
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="50" Height="40" BorderThickness="2"
+                            CornerRadius="12"
+                            Background="{TemplateBinding Background}">
+
+                                <ContentPresenter
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                                </ContentPresenter>
+
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
         <TextBlock x:Name="UsernameBlock" Text="" Width="120" Canvas.Left="516" Canvas.Top="20"></TextBlock>
 
         <ListBox x:Name ="UserBox" ItemsSource="{Binding UserList}"
