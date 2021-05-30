@@ -5,57 +5,38 @@ using System.Threading.Tasks;
 using ChatService.Utility;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Grpc.Core.Logging;
+using Grpc.Core.Interceptors;
 using Microsoft.Extensions.Logging;
+using System.Reactive.Linq;
+using ChatService.Models;
 
 namespace ChatService.Services
 {
     public class ChatService : MessengerService.MessengerServiceBase
     {
         private readonly ILogger<ChatService> _logger;
-        private readonly Empty m_empty = new Empty();
 
-        public ChatService(ILogger<ChatService> logger)
+        public override async Task GetMessages(GetMessagesRequest request, IServerStreamWriter<GetMessagesResponse> responseStream, ServerCallContext context)
         {
-            _logger = logger;
+            Console.WriteLine($"Call to {nameof(GetMessages)} from {context.Host}");
+            var chatLog = ChatBase.GetAllMessages();
+            foreach(var msg in chatLog)
+            {
+                await responseStream.WriteAsync(new GetMessagesResponse()
+                {
+                    From = msg.Sender,
+                    Text = msg.Text
+                });
+            }
         }
 
-        public override Task<Empty> GetUser(GetUserRequest request, ServerCallContext context)
+
+        public override Task<SendResponse> SendMessage(SendRequest request, ServerCallContext context)
         {
-            User user = new() { Name = request.User.Name, Id = 0 };
-
-            Console.WriteLine($"{user.Name} Logged In");
-
-            ChatBase.WriteToUserList(user);
-
-            return Task.FromResult(m_empty);
-        }
-
-        public override Task<SendUserListResponse> SendUserList(Empty request, ServerCallContext context)
-        {
-            SendUserListResponse sendUserListResponse = new SendUserListResponse();
-            sendUserListResponse.Users.AddRange(ChatBase.UserList);
-
-            Console.WriteLine("Sent user list.");
-            return Task.FromResult(sendUserListResponse);
-        }
-
-        public override Task<Empty> SendMessage(SendRequest request, ServerCallContext context)
-        {
-            Console.WriteLine("Got message from " + request.Message.User.Name);
-
-            ChatBase.WriteToMessageList(request.Message);
-
-            return Task.FromResult(m_empty);
-        }
-
-        public override Task<SendMessageListResponse> SendMessageList(Empty request, ServerCallContext context)
-        {
-            SendMessageListResponse sendMessageListResponse = new SendMessageListResponse();
-            sendMessageListResponse.Messages.AddRange(ChatBase.ChatLog);
-
-            Console.WriteLine("Sent message list.");
-            return Task.FromResult(sendMessageListResponse);
+            Console.WriteLine($"{context.Host} sent message: {request.From}: {request.Text}");
+            ChatMessage message = new(request.Text, request.From);
+            ChatBase.WriteToMessageList(message);
+            return Task.FromResult(new SendResponse());
         }
     }
 }
