@@ -47,6 +47,7 @@ namespace ChatClient.Views
                     foreach (var msg in args.Messages)
                     {
                         MainWindowVM.MessageList.Add(msg.ToString());
+                        
                         //FormatText(msg.ToString());
 
                     }
