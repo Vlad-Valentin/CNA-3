@@ -4,14 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ChatClient.ViewModels"
+        xmlns:library="clr-namespace:ChatLibrary;assembly=ChatLibrary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="Transparent">
     <Window.DataContext>
         <vm:MainWindowVM/>
     </Window.DataContext>
-    <Canvas>
 
-        <TextBox x:Name="UserText"
+    <Border CornerRadius="16" BorderThickness="5" BorderBrush="#39385d">
+        <Border CornerRadius="8" BorderThickness="10" BorderBrush="#181735">
+            <Canvas MouseDown="Canvas_MouseDown" Background="#181735">
+
+                <!--Tab-->
+                <Border Width="770"
+                Height="20"
+                Background="#39385d"
+                CornerRadius="8" >
+
+                    <WrapPanel>
+                        <!--Username TextBlock-->
+                    </WrapPanel>
+                </Border>
+
+                <Border Width="5"
+                Height="367"
+                Background="#5039385d"
+                CornerRadius="4" Canvas.Left="237" Canvas.Top="43" />
+
+
+                <Border Height="25" Width="200" CornerRadius="4"
+                        Background="White" Canvas.Left="23" Canvas.Top="43"
+                    >
+                    <TextBlock x:Name="UsernameBlock" Text="" Height="25"
+                                  TextWrapping="Wrap"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                                   Foreground="Black" FontWeight="Bold" Margin="45,5,45,-5"/>
+                </Border>
+
+                <!--Chat TextBox-->
+                <TextBox x:Name="UserText"
                  Text=""
                  TextWrapping="Wrap"
                  Width="450"
@@ -96,12 +134,99 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-        <TextBlock x:Name="UsernameBlock" Text="" Width="120" Canvas.Left="516" Canvas.Top="20"></TextBlock>
 
-        <ListBox x:Name ="UserBox" ItemsSource="{Binding UserList}"
-                 Height="375" Width="120" Canvas.Left="23" Canvas.Top="28"/>
-        <ListBox x:Name="MessageBox" ItemsSource="{Binding MessageList}"
-            Canvas.Left="456" Canvas.Top="72" Width="240" Height="269"/>
 
-    </Canvas>
+                <!--User ListBox-->
+                <ListBox x:Name ="UserBox" ItemsSource="{Binding UserList}"
+                 Canvas.Left="23" Canvas.Top="83"
+                 Height="325" Width="200"
+                         
+                 Foreground="White"
+                 FontWeight="Bold"
+                 Background="#39385d"
+                 BorderBrush="Transparent">
+
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+
+                            </Style.Triggers>
+
+
+                        </Style>
+                    </ListBox.Style>
+
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border CornerRadius="8"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}">
+
+                                <ItemsPresenter
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                </ItemsPresenter>
+
+
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                </ListBox>
+
+
+                <!--Chat ListBox-->
+                <ListBox x:Name="MessageBox" ItemsSource="{Binding MessageList}"
+                 Canvas.Left="256" Canvas.Top="43" Width="450" Height="300"
+                         
+                 Foreground="White"
+                 FontWeight="Bold"
+                 Background="#39385d"
+                 BorderBrush="Transparent">
+
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.Style>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border CornerRadius="8"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}">
+
+                                <ItemsPresenter
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                </ItemsPresenter>
+
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
+
+                </ListBox>
+                <Border Height="10" Width="20" CornerRadius="4"
+                    Background="LawnGreen" Canvas.Left="735" Canvas.Top="43"
+                    />
+
+            </Canvas>
+        </Border>
+    </Border>
 </Window>

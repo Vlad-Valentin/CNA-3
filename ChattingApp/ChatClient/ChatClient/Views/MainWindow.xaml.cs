@@ -58,7 +58,23 @@ namespace ChatClient.Views
             }
         }
 
-        
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+            if (client == null)
+            {
+                return;
+            }
+            try
+            {
+                client.SendMessage(UsernameBlock.Text.ToString(), UserText.Text.ToString());
+                UserText.Text = string.Empty;
+                client.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         private void Canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
