@@ -5,42 +5,14 @@ namespace ChatClient.ViewModels
 {
     public class MainWindowVM : INotifyPropertyChanged
     {
+        public static ObservableCollection<string> UserList { get; set; } = new ObservableCollection<string>();
+        public static ObservableCollection<string> MessageList { get; set; } = new ObservableCollection<string>();
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
         protected void Notify(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private ObservableCollection<string> userList;
-        public ObservableCollection<string> UserList
-        {
-            get => userList;
-
-            set
-            {
-                userList = value;
-                Notify(nameof(UserList));
-            }
-        }
-
-        private ObservableCollection<string> messageList;
-
-        public MainWindowVM()
-        {
-            UserList = new();
-            MessageList = new();
-        }
-
-        public ObservableCollection<string> MessageList
-        {
-            get => messageList;
-
-            set
-            {
-                messageList = value;
-                Notify(nameof(MessageList));
-            }
         }
     }
 }

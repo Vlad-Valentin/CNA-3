@@ -47,7 +47,11 @@ namespace ChatClient.Views
                     foreach (var msg in args.Messages)
                     {
                         MainWindowVM.MessageList.Add(msg.ToString());
+                        //FormatText(msg.ToString());
+
                     }
+
+
                 }));
             }
             catch (System.Threading.Tasks.TaskCanceledException taskException)
@@ -57,6 +61,31 @@ namespace ChatClient.Views
                 //or restarting him
             }
         }
+
+        //private void FormatText(string text)
+        //{
+        //    string s = text;
+        //    var parts = s.Split(new[] { " _", "_ " }, StringSplitOptions.None);
+        //    bool isbold = false;
+
+        //    foreach (var part in parts)
+        //    {
+        //        if (isbold)
+        //            MessageBox.ItemContainerStyle.Setters.Add(new Setter()
+        //            {
+        //                Property = FontStyleProperty,
+        //                Value = FontStyles.Italic
+        //            });
+        //        else
+        //            MessageBox.ItemContainerStyle.Setters.Add(new Setter()
+        //            {
+        //                Property = FontStyleProperty,
+        //                Value = FontStyles.Normal
+        //            });
+
+        //        isbold = !isbold; // toggle between bold and not bold
+        //    }
+        //}
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
@@ -91,13 +120,13 @@ namespace ChatClient.Views
 
         /* private async Task Join(string username)
          {
-             Thread recieveMessagesThread = new Thread(new ThreadStart(ServerToClient));
+          
              recieveMessagesThread.Start();
              while (recieveMessagesThread.ThreadState != ThreadState.Stopped)
              {
                  foreach (var message in listOfMessages)
                  {
-                     MainWindowVM.MessageList.Add(message);
+               
                  }
              }
              await ChatClient.JoinAsync(new Message { User = new User { Id = 0, Name = username }, Text = " is here" });

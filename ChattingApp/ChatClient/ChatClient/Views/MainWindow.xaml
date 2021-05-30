@@ -185,7 +185,7 @@
                 <ListBox x:Name="MessageBox" ItemsSource="{Binding MessageList}"
                  Canvas.Left="256" Canvas.Top="43" Width="450" Height="300"
                          
-                 Foreground="White"
+                 Foreground="Black"
                  FontWeight="Bold"
                  Background="#39385d"
                  BorderBrush="Transparent">
@@ -202,8 +202,29 @@
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Focusable" Value="False"/>
                             <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Foreground" Value="Black"/>
+
                         </Style>
                     </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="8"
+                                    Height="50" Width="200"
+                                    Background="White"
+>
+                                <HeaderedItemsControl
+                                     VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                                    
+                                </HeaderedItemsControl>
+                                
+                            </Border>
+                            
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
 
                     <ListBox.Template>
                         <ControlTemplate TargetType="ListBox">
@@ -222,6 +243,7 @@
                     </ListBox.Template>
 
                 </ListBox>
+                
                 <Border Height="10" Width="20" CornerRadius="4"
                     Background="LawnGreen" Canvas.Left="735" Canvas.Top="43"
                     />

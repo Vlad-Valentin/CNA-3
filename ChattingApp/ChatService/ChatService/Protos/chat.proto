@@ -9,6 +9,14 @@ package chat;
 service MessengerService{
 	rpc GetUser(GetUserRequest) returns (google.protobuf.Empty);
 	rpc SendUserList(google.protobuf.Empty) returns (SendUserListResponse);
+	
+	/*rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
+	rpc SendMessageList(google.protobuf.Empty) returns (SendMessageListResponse);
+
+	rpc ClientToServer(Message) returns(google.protobuf.Empty);
+	rpc ServerToClient(google.protobuf.Empty) returns (stream Message);
+	rpc Join(Message) returns(google.protobuf.Empty);
+	rpc Leave(Message) returns(google.protobuf.Empty);*/
 
 	rpc SendMessage(SendRequest) returns (SendResponse);
 	rpc GetMessages(GetMessagesRequest) returns (stream GetMessagesResponse);
@@ -34,6 +42,14 @@ message GetMessagesRequest{
 message GetMessagesResponse{
 	string from=1;
 	string text=2;
+}
+
+message SendUserListResponse{
+	 repeated User users = 1;
+}
+
+message SendMessageListResponse{
+	repeated Message messages = 1;
 }
 
 message User{

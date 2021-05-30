@@ -4,7 +4,6 @@ using Grpc.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +36,7 @@ namespace ChatClient.Grpc
 
         private async void UpdateMessages(object state)
         {
-            if (Interlocked.CompareExchange(ref updating,1,0) == 0)
+            if (Interlocked.CompareExchange(ref updating, 1, 0) == 0)
             {
                 try
                 {
@@ -51,13 +50,13 @@ namespace ChatClient.Grpc
                     }
                     if (messages.Count() != oldMessages.Count())
                     {
-                        
+
                         RecievedMessages?.Invoke(this, new RecievedMessagesEventArgs() { Messages = messages.TakeLast(1) });
                     }
                     oldMessages = messages;
                     timer.Change(INTERVAL, -1);
                 }
-                catch(RpcException ex)
+                catch (RpcException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -87,7 +86,7 @@ namespace ChatClient.Grpc
             UpdateMessages(null);
         }
 
-        public void SendMessage(string from,string text)
+        public void SendMessage(string from, string text)
         {
             client.SendMessage(new SendRequest { From = from, Text = text });
         }
