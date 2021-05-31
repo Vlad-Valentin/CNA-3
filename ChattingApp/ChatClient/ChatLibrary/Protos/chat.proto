@@ -1,15 +1,12 @@
 syntax = "proto3";
 
-option csharp_namespace = "ChatClient";
+option csharp_namespace = "ChatService";
 
 import "google/protobuf/Empty.proto";
 
 package chat;
 
 service MessengerService{
-	rpc GetUser(GetUserRequest) returns (google.protobuf.Empty);
-	rpc SendUserList(google.protobuf.Empty) returns (SendUserListResponse);
-	
 	/*rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
 	rpc SendMessageList(google.protobuf.Empty) returns (SendMessageListResponse);
 
@@ -20,10 +17,9 @@ service MessengerService{
 
 	rpc SendMessage(SendRequest) returns (SendResponse);
 	rpc GetMessages(GetMessagesRequest) returns (stream GetMessagesResponse);
-}
 
-message GetUserRequest{
-	User user = 1;
+	rpc SendUser(SendUserRequest) returns (SendUserResponse);
+	rpc GetUsers(GetUserRequest) returns (stream GetUsersResponse);
 }
 
 message SendRequest{
@@ -44,13 +40,24 @@ message GetMessagesResponse{
 	string text=2;
 }
 
-message SendUserListResponse{
-	 repeated User users = 1;
+message SendUserRequest{
+	string username=1;
 }
 
-message SendMessageListResponse{
-	repeated Message messages = 1;
+message SendUserResponse{
+
 }
+
+message GetUserRequest{
+
+}
+
+message GetUsersResponse{
+	string username=1;
+}
+
+
+
 
 message User{
 	int32 id = 1;

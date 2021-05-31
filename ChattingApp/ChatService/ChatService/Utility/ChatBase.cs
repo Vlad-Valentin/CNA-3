@@ -8,7 +8,7 @@ namespace ChatService.Utility
     public static class ChatBase
     {
         public static List<ChatMessage> ChatLog { get; set; }
-        public static List<User> UserList { get; set; }
+        public static List<string> UserList { get; set; }
         public static Message LastMessageSent { get; set; }
 
         static ChatBase()
@@ -16,7 +16,7 @@ namespace ChatService.Utility
             ChatLog = new List<ChatMessage>();
             //ChatLog.Add(new Message() { User = new User { Id = 0, Name = string.Empty }, Text = string.Empty });
            // LastMessageSent = ChatLog.Last();
-            UserList = new List<User>();
+            UserList = new List<string>();
         }
 
         public static void WriteToMessageList(ChatMessage message)
@@ -24,14 +24,19 @@ namespace ChatService.Utility
             ChatLog.Add(message);
         }
 
-        public static void WriteToUserList(User user)
+        public static void WriteToUserList(string username)
         {
-            UserList.Add(user);
+            UserList.Add(username);
         }
 
         public static IEnumerable<ChatMessage> GetAllMessages()
         {
             return ChatLog;
+        }
+
+        public static IEnumerable<string> GetAllUsers()
+        {
+            return UserList;
         }
     }
 }
