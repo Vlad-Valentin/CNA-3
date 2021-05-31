@@ -26,6 +26,14 @@ namespace ChatClient.Views
             UsernameBlock.Text = username;
             client = new();
             client.RecievedMessages += OnMessageRecieved;
+            client.RecievedUsers += OnUserRecieved;
+            SendUserToServer(username);
+        }
+
+        public void SendUserToServer(string username)
+        {
+            client.SendUser(username);
+            client.RefreshUsers();
         }
 
         private void SetOnline()
@@ -60,6 +68,24 @@ namespace ChatClient.Views
                 Console.WriteLine(taskException.Message);
                 //continue by shutting down client
                 //or restarting him
+            }
+        }
+
+        private void OnUserRecieved(object sender,RecievedUsersEventArgs args)
+        {
+            try
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    foreach (var user in args.Users)
+                    {
+                        MainWindowVM.UserList.Add(user.ToString());
+                    }
+                }));
+            }
+            catch(System.Threading.Tasks.TaskCanceledException taskException)
+            {
+                Console.WriteLine(taskException.Message);
             }
         }
 
