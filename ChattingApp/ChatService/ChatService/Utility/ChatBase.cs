@@ -9,14 +9,14 @@ namespace ChatService.Utility
     {
         public static List<ChatMessage> ChatLog { get; set; }
         public static List<string> UserList { get; set; }
-        public static Message LastMessageSent { get; set; }
+
+        public static List<string> DisconnectedUserList { get; set; }
 
         static ChatBase()
         {
             ChatLog = new List<ChatMessage>();
-            //ChatLog.Add(new Message() { User = new User { Id = 0, Name = string.Empty }, Text = string.Empty });
-           // LastMessageSent = ChatLog.Last();
             UserList = new List<string>();
+            DisconnectedUserList = new List<string>();
         }
 
         public static void WriteToMessageList(ChatMessage message)
@@ -29,6 +29,11 @@ namespace ChatService.Utility
             UserList.Add(username);
         }
 
+        public static void WriteToDisconnectedUserList(string username)
+        {
+            DisconnectedUserList.Add(username);
+        }
+
         public static IEnumerable<ChatMessage> GetAllMessages()
         {
             return ChatLog;
@@ -37,6 +42,11 @@ namespace ChatService.Utility
         public static IEnumerable<string> GetAllUsers()
         {
             return UserList;
+        }
+
+        public static IEnumerable<string> GetAllDisconnectedUsers()
+        {
+            return DisconnectedUserList;
         }
     }
 }

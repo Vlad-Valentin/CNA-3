@@ -60,6 +60,27 @@ namespace ChatService.Services
             ChatBase.WriteToUserList(userName);
             return Task.FromResult(new SendUserResponse());
         }
+
+        public override async Task GetDisconnectedUsers(GetDisconnectedUsersRequest request, IServerStreamWriter<GetDisconnectedUsersResponse> responseStream, ServerCallContext context)
+        {
+            Console.WriteLine($"{nameof(GetDisconnectedUsers)} called from {context.Host}");
+            var disconnectedUsersLog = ChatBase.GetAllDisconnectedUsers();
+            foreach(var user in disconnectedUsersLog)
+            {
+                await responseStream.WriteAsync(new GetDisconnectedUsersResponse()
+                {
+                    Username = user
+                });
+            }
+        }
+
+        public override Task<SendDisconnectedResponse> SendDisconnectedUser(SendDisconnectedRequest request, ServerCallContext context)
+        {
+            Console.WriteLine($"{context.Host} disconnected user: {request.Username}");
+            string username = request.Username;
+            ChatBase.WriteToDisconnectedUserList(username);
+            return Task.FromResult(new SendDisconnectedResponse());
+        }
         /* private readonly Empty m_empty = new Empty();
 
          private ChatServiceHelper serviceHelper = new();
