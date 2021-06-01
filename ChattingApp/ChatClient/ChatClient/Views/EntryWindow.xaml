@@ -5,11 +5,126 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient.Views"
         mc:Ignorable="d"
-        Title="EntryWindow" Height="120" Width="300">
-    <Canvas>
-        <TextBox x:Name="UsernameText"
-            Text="" TextWrapping="Wrap" Canvas.Left="39" Canvas.Top="38" Width="141"/>
-        <Button Content="Enter"
-            Click="Enter_Click" Canvas.Left="185" Canvas.Top="37"/>
-    </Canvas>
+        Title="EntryWindow" Height="300" Width="300"
+        
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="Transparent">
+
+    <Border CornerRadius="16" BorderThickness="5" BorderBrush="#39385d">
+        <Border CornerRadius="8" BorderThickness="10" BorderBrush="#181735">
+            <Canvas Background="#181735" MouseDown="Canvas_MouseDown">
+
+                <!--Username TextBox-->
+                <TextBox x:Name="UsernameText"
+                         Canvas.Left="39" Canvas.Top="38"
+                         Width="140" Height="25"
+                         FontSize="14"
+                         FontWeight="Bold"
+                         BorderBrush="Black"
+                         MaxLength="15">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Style>
+                    </TextBox.Style>
+
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border CornerRadius="8"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}">
+
+                                <ContentPresenter
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Content="{TemplateBinding Text}">
+                                </ContentPresenter>
+
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+
+                <!--Some Text-->
+                <TextBlock Text="Hello there, um..."
+                           Height="15" Width="100"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Canvas.Left="60" Canvas.Top="17">
+                </TextBlock>
+
+                <!--Enter Button-->
+                <Button Content="Enter" FontSize="14" FontWeight="Bold"
+            Click="Enter_Click" Canvas.Left="184" Canvas.Top="30" Height="40" Width="50">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Violet"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightPink"/>
+                                </Trigger>
+                            </Style.Triggers>
+
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    BorderThickness="2"
+                            CornerRadius="12"
+                            Background="{TemplateBinding Background}">
+
+                                <ContentPresenter
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                                </ContentPresenter>
+
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--Exit Border-->
+                <Border Height="5" Width="20"
+                        CornerRadius="2" Background="Pink" Canvas.Left="252" RenderTransformOrigin="0.5,0.5" Canvas.Top="6"
+                        MouseDown="Border_MouseDown">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-45"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+
+                <Border Height="5" Width="20"
+                    CornerRadius="2" Background="Pink" Canvas.Left="252" RenderTransformOrigin="0.5,0.5" Canvas.Top="6"
+                        MouseDown="Border_MouseDown">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-135"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+            </Canvas>
+        </Border>
+    </Border>
+
 </Window>

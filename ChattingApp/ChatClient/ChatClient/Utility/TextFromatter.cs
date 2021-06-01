@@ -21,7 +21,7 @@ namespace ChatClient.Utility
 
         public static TextBlock FormatText(ChatMessage message)
         {
-            TextBlock formattedText = new TextBlock() { FontFamily = new System.Windows.Media.FontFamily("Times New Roman"), FontSize = 15, Foreground = Brushes.White };
+            TextBlock formattedText = new TextBlock() { FontFamily = new System.Windows.Media.FontFamily("Times New Roman"), FontSize = 18, Foreground = Brushes.White };
             StringBuilder sectionToFormat = new StringBuilder();
             sectionToFormat.Append(message.Text);
             message.Text = strikeText(sectionToFormat);
