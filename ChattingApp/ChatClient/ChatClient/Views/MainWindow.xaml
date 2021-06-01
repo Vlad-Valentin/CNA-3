@@ -7,7 +7,7 @@
         xmlns:library="clr-namespace:ChatLibrary;assembly=ChatLibrary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        
+        Closing="Disconnect_Click"
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -19,13 +19,24 @@
 
     <Border CornerRadius="16" BorderThickness="5" BorderBrush="#39385d">
         <Border CornerRadius="8" BorderThickness="10" BorderBrush="#181735">
-            <Canvas MouseDown="Canvas_MouseDown" Background="#181735">
+            <Grid MouseDown="Canvas_MouseDown" Background="#181735">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="230"></ColumnDefinition>
+                    <ColumnDefinition Width="20"></ColumnDefinition>
+                    <ColumnDefinition Width="460"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
 
-                <!--Tab-->
+                    <!--Tab-->
                 <Border Width="770"
                 Height="20"
                 Background="#39385d"
-                CornerRadius="8" >
+                CornerRadius="8" Grid.ColumnSpan="4">
 
                     <WrapPanel>
                         <!--Username TextBlock-->
@@ -35,12 +46,11 @@
                 <Border Width="5"
                 Height="367"
                 Background="#5039385d"
-                CornerRadius="4" Canvas.Left="237" Canvas.Top="43" />
+                CornerRadius="4" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
 
 
                 <Border Height="25" Width="200" CornerRadius="4"
-                        Background="White" Canvas.Left="23" Canvas.Top="43"
-                    >
+                        Background="White" Grid.Row="1">
                     <TextBlock x:Name="UsernameBlock" Text="" Height="25"
                                   TextWrapping="Wrap"
                                VerticalAlignment="Center"
@@ -54,9 +64,9 @@
                  TextWrapping="Wrap"
                  Width="450"
                  Height="50"
-                 Canvas.Left="256"
-                 Canvas.Top="360"
-                 
+                 Grid.Column="2"
+                 Grid.Row="2"
+                 Margin="0, 275,0,0"
                  FontWeight="Bold"
                  Foreground="Black">
 
@@ -99,10 +109,11 @@
                 <!--Send Button-->
                 <Button Content="Send"
                 Click="Send_Click"
-                Canvas.Left="720"
-                Canvas.Top="365"
                 Height="40"
                 Width="50"
+                Grid.Column="3"
+                Grid.Row="2"
+                Margin="0,277,0,0"
                 Foreground="White">
                     <Button.Style>
                         <Style TargetType="Button">
@@ -138,9 +149,8 @@
 
                 <!--User ListBox-->
                 <ListBox x:Name ="UserBox" ItemsSource="{Binding UserList}"
-                 Canvas.Left="23" Canvas.Top="83"
                  Height="325" Width="200"
-                         
+                 Grid.Row="2"
                  Foreground="White"
                  FontWeight="Bold"
                  Background="#39385d"
@@ -182,67 +192,29 @@
 
 
                 <!--Chat ListBox-->
-                <ListView x:Name="MessageBox" ItemsSource="{Binding MessageList}"
-                 Canvas.Left="256" Canvas.Top="43" Width="450" Height="300"
-                         
-                 Foreground="White"
-                 FontWeight="Bold"
+                <Border Height="300" Width="450"
+                 Grid.Column="2"
+                 Grid.Row="1"
+                 Grid.RowSpan="2"
+                 Margin="0,-70,0,0"
                  Background="#39385d"
-                 BorderBrush="Transparent">
+                 CornerRadius="8">
 
-                    <ListView.Style>
-                        <Style TargetType="ListBox">
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Focusable" Value="False"/>
-                        </Style>
-                    </ListView.Style>
+                </Border>
+                <ScrollViewer x:Name="ChatScroller" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="450" Height="300"
+                 Grid.Column="2"
+                 Grid.Row="1"
+                 Grid.RowSpan="2"
+                 Margin="0,-70,0,0"
+                 Background="Transparent">
+                    <StackPanel x:Name="ListOfMessages" Background="Transparent">
 
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Focusable" Value="False"/>
-                            <Setter Property="IsHitTestVisible" Value="False"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Margin" Value="10"/>
-
-                        </Style>
-                    </ListView.ItemContainerStyle>
-              
-                    <ListView.Template>
-                        <ControlTemplate TargetType="ListBox">
-                            <Border CornerRadius="8"
-                            Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}"
-                            Background="{TemplateBinding Background}">
-
-                                <ItemsPresenter
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Left">
-                                </ItemsPresenter>
-
-                            </Border>
-                        </ControlTemplate>
-                    </ListView.Template>
-
-                    <!--<ListView.ItemTemplate >
-                        <DataTemplate>
-                            <Border CornerRadius="8"
-                                    Height="50" Width="200"
-                                    Background="#50FFFFFF">
-
-
-                            </Border>
-
-                        </DataTemplate>
-                    </ListView.ItemTemplate>-->
-
-                </ListView>
+                    </StackPanel>
+                </ScrollViewer>
                 
-                <Border Height="10" Width="20" CornerRadius="4"
-                    Background="LawnGreen" Canvas.Left="735" Canvas.Top="43"
-                    />
+                <Border Height="10" Width="20" Grid.Column="3" Grid.Row="1" CornerRadius="4" Background="LawnGreen"/>
 
-            </Canvas>
+            </Grid>
         </Border>
     </Border>
 </Window>

@@ -1,10 +1,12 @@
 ﻿using ChatClient.Grpc;
+using ChatClient.Utility;
 using ChatClient.ViewModels;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ChatClient.Views
@@ -38,16 +40,6 @@ namespace ChatClient.Views
             client.RefreshUsers();
         }
 
-        private void SetOnline()
-        {
-            //To-DO
-        }
-
-        private void SetOffline()
-        {
-            //To-DO
-        }
-
         private void OnMessageRecieved(object sender, RecievedMessagesEventArgs args)
         {
             try
@@ -56,13 +48,9 @@ namespace ChatClient.Views
                 {
                     foreach (var msg in args.Messages)
                     {
-                        MainWindowVM.MessageList.Add(msg.ToString());
-                        
-                        //FormatText(msg.ToString());
-
+                        TextBlock tb = TextFormatter.FormatText(msg);
+                        ListOfMessages.Children.Add(tb);
                     }
-
-
                 }));
             }
             catch (System.Threading.Tasks.TaskCanceledException taskException)
