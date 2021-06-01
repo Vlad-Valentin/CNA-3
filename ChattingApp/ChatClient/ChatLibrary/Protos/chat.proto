@@ -7,20 +7,14 @@ import "google/protobuf/Empty.proto";
 package chat;
 
 service MessengerService{
-	
-	/*rpc SendMessage(SendRequest) returns (google.protobuf.Empty);
-	rpc SendMessageList(google.protobuf.Empty) returns (SendMessageListResponse);
-
-	rpc ClientToServer(Message) returns(google.protobuf.Empty);
-	rpc ServerToClient(google.protobuf.Empty) returns (stream Message);
-	rpc Join(Message) returns(google.protobuf.Empty);
-	rpc Leave(Message) returns(google.protobuf.Empty);*/
-
 	rpc SendMessage(SendRequest) returns (SendResponse);
 	rpc GetMessages(GetMessagesRequest) returns (stream GetMessagesResponse);
 
 	rpc SendUser(SendUserRequest) returns (SendUserResponse);
 	rpc GetUsers(GetUserRequest) returns (stream GetUsersResponse);
+
+	rpc SendDisconnectedUser(SendDisconnectedRequest) returns (SendDisconnectedResponse);
+	rpc GetDisconnectedUsers(GetDisconnectedUsersRequest) returns (stream GetDisconnectedUsersResponse);
 }
 
 
@@ -48,6 +42,22 @@ message SendUserRequest{
 
 message SendUserResponse{
 
+}
+
+message SendDisconnectedRequest{
+	string username=1;
+}
+
+message SendDisconnectedResponse{
+
+}
+
+message GetDisconnectedUsersRequest{
+
+}
+
+message GetDisconnectedUsersResponse{
+	string username=1;
 }
 
 message GetUserRequest{

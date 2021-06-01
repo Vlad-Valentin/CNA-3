@@ -3,6 +3,7 @@ using ChatClient.ViewModels;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -27,6 +28,7 @@ namespace ChatClient.Views
             client = new();
             client.RecievedMessages += OnMessageRecieved;
             client.RecievedUsers += OnUserRecieved;
+            client.LeftUsers += OnDcRecieved;
             SendUserToServer(username);
         }
 
@@ -71,6 +73,27 @@ namespace ChatClient.Views
             }
         }
 
+        private void OnDcRecieved(object sender,LeftUserEventArgs args)
+        {
+            try
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    foreach (var user in args.DisconnectedUsers)
+                    {
+                        if (MainWindowVM.UserList.Contains(user))
+                        {
+                            MainWindowVM.UserList.Remove(user);
+                        }
+                    }
+                }));
+            }
+            catch(System.Threading.Tasks.TaskCanceledException taskException)
+            {
+                Console.WriteLine(taskException.Message);
+            }
+        }
+
         private void OnUserRecieved(object sender,RecievedUsersEventArgs args)
         {
             try
@@ -89,30 +112,6 @@ namespace ChatClient.Views
             }
         }
 
-        //private void FormatText(string text)
-        //{
-        //    string s = text;
-        //    var parts = s.Split(new[] { " _", "_ " }, StringSplitOptions.None);
-        //    bool isbold = false;
-
-        //    foreach (var part in parts)
-        //    {
-        //        if (isbold)
-        //            MessageBox.ItemContainerStyle.Setters.Add(new Setter()
-        //            {
-        //                Property = FontStyleProperty,
-        //                Value = FontStyles.Italic
-        //            });
-        //        else
-        //            MessageBox.ItemContainerStyle.Setters.Add(new Setter()
-        //            {
-        //                Property = FontStyleProperty,
-        //                Value = FontStyles.Normal
-        //            });
-
-        //        isbold = !isbold; // toggle between bold and not bold
-        //    }
-        //}
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
@@ -127,6 +126,23 @@ namespace ChatClient.Views
                 client.Refresh();
             }
             catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void Disconnect_Click(object sender,CancelEventArgs e)
+        {
+            if (client == null)
+            {
+                return;
+            }
+            try
+            {
+                client.SendDisconnectedUser(UsernameBlock.Text.ToString());
+                client.RefreshDisconnected();
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
