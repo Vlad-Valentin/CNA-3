@@ -99,7 +99,7 @@ namespace ChatClient.Views
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            if (client == null)
+            if (client == null || string.IsNullOrEmpty(UserText.Text))
             {
                 return;
             }

@@ -35,7 +35,6 @@ namespace ChatService.Services
             }
         }
 
-
         public override Task<SendResponse> SendMessage(SendRequest request, ServerCallContext context)
         {
             _logger.Log(LogLevel.Information,$"{context.Host} sent message: {request.From}: {request.Text}");
