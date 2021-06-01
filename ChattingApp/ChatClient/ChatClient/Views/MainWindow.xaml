@@ -124,7 +124,7 @@
 
     <Border CornerRadius="16" BorderThickness="5" BorderBrush="#39385d">
         <Border CornerRadius="8" BorderThickness="10" BorderBrush="#181735">
-            <Grid MouseDown="Canvas_MouseDown" Background="#181735">
+            <Grid MouseDown="Grid_MouseDown" Background="#181735">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="230"></ColumnDefinition>
                     <ColumnDefinition Width="20"></ColumnDefinition>
@@ -138,10 +138,10 @@
                 </Grid.RowDefinitions>
 
                 <!--Tab-->
-                <Border Width="770"
+                <Border
                 Height="20"
                 Background="#39385d"
-                CornerRadius="8" Grid.ColumnSpan="4">
+                CornerRadius="8" Grid.ColumnSpan="3" Margin="0,0,5,0">
 
                     <WrapPanel>
                         <!--Username TextBlock-->
@@ -265,7 +265,7 @@
                             <Setter Property="Focusable" Value="False"/>
                         </Style>
                     </ListBox.Style>
-                    
+
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Focusable" Value="False"/>
@@ -315,6 +315,33 @@
                 </ScrollViewer>
 
                 <Border Height="10" Width="20" Grid.Column="3" Grid.Row="1" CornerRadius="4" Background="LawnGreen"/>
+
+                <!--Exit Border-->
+                <Border Height="5" Width="20" Grid.Column="3"
+                        CornerRadius="2" Background="Pink" Canvas.Left="252" RenderTransformOrigin="0.5,0.5" Canvas.Top="6"
+                        MouseDown="Border_MouseDown">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-45"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
+
+                <Border Height="5" Width="20" Grid.Column="3"
+                    CornerRadius="2" Background="Pink" Canvas.Left="252" RenderTransformOrigin="0.5,0.5" Canvas.Top="6"
+                        MouseDown="Border_MouseDown">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-135"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                </Border>
 
             </Grid>
         </Border>

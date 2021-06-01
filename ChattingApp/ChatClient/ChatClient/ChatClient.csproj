@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\bugbear.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ChatLibrary\ChatLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\bugbear.png" />
   </ItemGroup>
 
 </Project>

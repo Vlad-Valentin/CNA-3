@@ -14,12 +14,12 @@ namespace ChatClient.Grpc
         public IEnumerable<ChatMessage> Messages;
     }
 
-    public class RecievedUsersEventArgs:EventArgs
+    public class RecievedUsersEventArgs : EventArgs
     {
         public IEnumerable<string> Users;
     }
 
-    public class LeftUserEventArgs:EventArgs
+    public class LeftUserEventArgs : EventArgs
     {
         public IEnumerable<string> DisconnectedUsers;
     }
@@ -100,7 +100,7 @@ namespace ChatClient.Grpc
 
         private async void UpdateUsers(object state)
         {
-            if (Interlocked.CompareExchange(ref userUpdating,1,0) == 0)
+            if (Interlocked.CompareExchange(ref userUpdating, 1, 0) == 0)
             {
                 try
                 {
@@ -119,7 +119,7 @@ namespace ChatClient.Grpc
                     oldUsers = users;
                     userTimer.Change(INTERVAL, -1);
                 }
-                catch(RpcException ex)
+                catch (RpcException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

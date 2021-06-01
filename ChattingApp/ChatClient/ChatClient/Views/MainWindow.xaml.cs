@@ -13,15 +13,14 @@ namespace ChatClient.Views
 {
     public partial class MainWindow : Window
     {
-        private static List<string> listOfMessages = new();
-        private static GrpcChannel RpcChannel = GrpcChannel.ForAddress("https://localhost:5001");
-        private static MessengerService.MessengerServiceClient ChatClient = new MessengerService.MessengerServiceClient(RpcChannel);
+        private static readonly List<string> listOfMessages = new();
+        private static readonly GrpcChannel RpcChannel = GrpcChannel.ForAddress("https://localhost:5001");
+        private static readonly MessengerService.MessengerServiceClient ChatClient = new(RpcChannel);
 
-        private ChatClientRpc client;
+        private readonly ChatClientRpc client;
 
         public MainWindow(string username)
         {
-            //_ = Join(username);
             DataContext = new MainWindowVM();
 
             InitializeComponent();
@@ -61,7 +60,7 @@ namespace ChatClient.Views
             }
         }
 
-        private void OnDcRecieved(object sender,LeftUserEventArgs args)
+        private void OnDcRecieved(object sender, LeftUserEventArgs args)
         {
             try
             {
@@ -76,13 +75,13 @@ namespace ChatClient.Views
                     }
                 }));
             }
-            catch(System.Threading.Tasks.TaskCanceledException taskException)
+            catch (System.Threading.Tasks.TaskCanceledException taskException)
             {
                 Console.WriteLine(taskException.Message);
             }
         }
 
-        private void OnUserRecieved(object sender,RecievedUsersEventArgs args)
+        private void OnUserRecieved(object sender, RecievedUsersEventArgs args)
         {
             try
             {
@@ -94,12 +93,11 @@ namespace ChatClient.Views
                     }
                 }));
             }
-            catch(System.Threading.Tasks.TaskCanceledException taskException)
+            catch (System.Threading.Tasks.TaskCanceledException taskException)
             {
                 Console.WriteLine(taskException.Message);
             }
         }
-
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
@@ -119,7 +117,7 @@ namespace ChatClient.Views
             }
         }
 
-        private void Disconnect_Click(object sender,CancelEventArgs e)
+        private void Disconnect_Click(object sender, CancelEventArgs e)
         {
             if (client == null)
             {
@@ -130,106 +128,26 @@ namespace ChatClient.Views
                 client.SendDisconnectedUser(UsernameBlock.Text.ToString());
                 client.RefreshDisconnected();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
 
-        private void Canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-
-            if (e.MiddleButton == MouseButtonState.Pressed)
             {
                 Close();
             }
         }
 
-        /* private async Task Join(string username)
-         {
-          
-             recieveMessagesThread.Start();
-             while (recieveMessagesThread.ThreadState != ThreadState.Stopped)
-             {
-                 foreach (var message in listOfMessages)
-                 {
-               
-                 }
-             }
-             await ChatClient.JoinAsync(new Message { User = new User { Id = 0, Name = username }, Text = " is here" });
-         }
-
-         private void Send_Click(object sender, RoutedEventArgs e)
-         {
-             _ = SendMessage();
-         }
-
-         private async Task SendMessage()
-         {
-             //_ = CallGrpcService();
-             _ = Join("");
-             string msg;
-
-             bool isConnected = true;
-             //while (isConnected)
-             //{
-                 msg = UserText.Text;
-                 if (msg.Equals("EXIT"))
-                 {
-                     isConnected = false;
-                     await ChatClient.LeaveAsync(new Message { User = new User { Id = 0, Name = UsernameBlock.Text }, Text = msg });
-                 }
-                 else
-                 {
-                     await ChatClient.ClientToServerAsync(new Message { User = new User { Id = 0, Name = UsernameBlock.Text }, Text = msg });
-                 }
-             MainWindowVM.MessageList.Add(msg);
-             //}
-         }
-
-         //private async Task CallGrpcService()
-         //{
-         //    /* var client = new GrpcServiceProvider().ge;
-         //     var reply = await client.SayHelloAsync(
-         //                       new HelloRequest { Name = "WPF client" });
-
-         //     this.UserText.Text = reply.Message;*/
-        //    //var rand = new Random();
-        //    //var client = new GrpcServiceProvider().GetMessengerClient();
-        //    //Message chatsv = new Message()
-        //    //{
-        //    //    Text = UserText.Text,
-        //    //    User = new User()
-        //    //    {
-        //    //        Id = rand.Next(0, 10),
-        //    //        Name = UsernameBlock.Text
-        //    //    },
-        //    //};
-        //    //var reply = await client.SendMessageAsync(request: new SendRequest { Message = chatsv });
-        //}
-
-        /* private async void ServerToClient()
-         {
-             await Task.Run(async () =>
-             {
-                 var dataStream = ChatClient.ServerToClient(new Empty());
-
-                 try
-                 {
-                     await foreach (var message in dataStream.ResponseStream.ReadAllAsync())
-                     {
-                         listOfMessages.Add(message.Text);
-                     }
-                 }
-                 catch (RpcException e) when (e.StatusCode == StatusCode.Cancelled)
-                 {
-                     Console.WriteLine("Stream cancelled by client.");
-                 }
-             });
-         }*/
+        private void Grid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }

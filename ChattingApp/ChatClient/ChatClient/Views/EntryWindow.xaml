@@ -123,6 +123,15 @@
                         </TransformGroup>
                     </Border.RenderTransform>
                 </Border>
+
+                <!--Bear Image-->
+                <Image x:Name="Bear" Source="/Views/bugbear.png" MouseDown="Bear_MouseDown" Canvas.Left="11" Canvas.Top="94">
+                    <Image.Effect>
+                        <BlurEffect KernelType="Gaussian" Radius="8"></BlurEffect>
+                    </Image.Effect>
+                </Image>
+
+                <Image Source="/Views/bugbear.png" MouseDown="Bear_MouseDown" Canvas.Left="11" Canvas.Top="94"/>
             </Canvas>
         </Border>
     </Border>
