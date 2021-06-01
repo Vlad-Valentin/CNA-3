@@ -55,8 +55,6 @@ namespace ChatClient.Views
             catch (System.Threading.Tasks.TaskCanceledException taskException)
             {
                 Console.WriteLine(taskException.Message);
-                //continue by shutting down client
-                //or restarting him
             }
         }
 

@@ -233,10 +233,5 @@ namespace ChatClient.Grpc
         {
             client.SendDisconnectedUser(new SendDisconnectedRequest { Username = username });
         }
-
-        public void ShutDown()
-        {
-            //TO-DO
-        }
     }
 }
